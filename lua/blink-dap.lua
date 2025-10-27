@@ -68,7 +68,12 @@ end
 ---@return string[] trigger_characters The characters to trigger a completion
 local function get_dap_trigger_characters(filetypes)
 	local dap_session = dap.session()
-	assert(dap_session)
+
+	-- Don't bother if we're not in a session
+	-- Gets around the enabled logic being faulty
+	if dap_session == nil then
+		return {}
+	end
 
 	local config_type = dap_session.config.type
 	-- Return (by priority) the user-defined trigger characters, the adapter's, or assume '.'

@@ -65,6 +65,7 @@ local function is_allowed_filetype(bufnr, allowed_buf_types)
 end
 
 ---Get the trigger characters for the current debug adapter
+---@param filetypes table<string, DapFileTypeConfig> The filetypes specified in the user's config.
 ---@return string[] trigger_characters The characters to trigger a completion
 local function get_dap_trigger_characters(filetypes)
 	local dap_session = dap.session()
@@ -76,8 +77,9 @@ local function get_dap_trigger_characters(filetypes)
 	end
 
 	local config_type = dap_session.config.type
+	local user_defined_trigger_chars = (filetypes[config_type] and filetypes[config_type].trigger_characters)
 	-- Return (by priority) the user-defined trigger characters, the adapter's, or assume '.'
-	return filetypes[config_type].trigger_characters or dap_session.capabilities.completionTriggerCharacters or { "." }
+	return user_defined_trigger_chars or dap_session.capabilities.completionTriggerCharacters or { "." }
 end
 
 ---Initialize the plugin

@@ -1,6 +1,8 @@
 # Blink DAP
 A plugin to add DAP completion to the [blink.cmp](https://github.com/Saghen/blink.cmp) completion engine.
 
+![A screenshot of a debugger with completions in the REPL](./assets/blink-dap-demo.png)
+
 ## Installation (via Lazy)
 ```lua
 {
